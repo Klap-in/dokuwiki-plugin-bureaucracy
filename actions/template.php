@@ -27,9 +27,13 @@ class syntax_plugin_bureaucracy_action_template extends syntax_plugin_bureaucrac
             // prepare replacements
             if(!is_null($label)) {
                 $patterns[$label] = '/(@@|##)' . preg_quote($label, '/') .
-                              '(?:\|(.*?))' . (is_null($value) ? '' : '?') .
+                              '(?:\|([^|]*?))' . (is_null($value) ? '' : '?') .
                               '\1/si';
                 $values[$label] = is_null($value) ? '$2' : $value;
+
+                $patterns[$label.'|'] = '/(@@|##)' . preg_quote($label, '/') .
+                              '(?:\|(.*?))(?:\|(.*?))\1/si';
+                $values[$label.'|'] = is_null($value) ? '$2' : '$3';
             }
 
 
