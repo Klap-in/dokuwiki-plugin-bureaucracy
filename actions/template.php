@@ -63,8 +63,13 @@ class syntax_plugin_bureaucracy_action_template extends syntax_plugin_bureaucrac
 
         $_templates = array();
         foreach($templates as $k => $v) {
-            $_templates[cleanID("$pagename:$k")] = $v;
-        }
+            if($k[0] == '.'){
+		        $k = getNS($ID).substr($k,1);
+			    $_templates[cleanID(parent::replace($k))] = $v;
+	        } else {
+		        $_templates[cleanID("$pagename:$k")] = $v;
+	        }
+		}
         $templates = $_templates;
 
         // get templates
